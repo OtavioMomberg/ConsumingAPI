@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:tomate_shop/controllers/list_products_controller.dart';
+import 'package:tomate_shop/controllers/list_searched_products_controller.dart';
 import 'package:tomate_shop/repositories/implementarions/list_products_implementation_http.dart';
 import 'package:tomate_shop/pages/product_page.dart';
+import 'package:tomate_shop/repositories/implementarions/list_searched_products_implementation_http.dart';
 import 'package:tomate_shop/widgets/cards/card_product.dart';
 import 'package:tomate_shop/widgets/caroussel_itens.dart';
 import 'package:tomate_shop/widgets/input_fields/search_input.dart';
@@ -16,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   late final ListProductsController _listProductsController;
+  late final ListSearchedProductsController _listSearchedProductsController;
   final _searchController = TextEditingController();
   late String tokenType;
   bool getProductControllerInitialized = false;
@@ -25,8 +28,13 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     _listProductsController = ListProductsController(
       ListProductsImplementationHttp(client: Client()),
+    );
+
+    _listSearchedProductsController = ListSearchedProductsController(
+      ListSearchedProductsImplementationHttp(client: Client()),
     );
     
     loadProducts();
@@ -50,6 +58,8 @@ class HomePageState extends State<HomePage> {
     for (int i=limit; i<products.length; i++) {
       gridItens.add(products[i]);
     }
+
+    await _listSearchedProductsController.onListProducts("");
       
     setState(() {});
   }
@@ -100,23 +110,40 @@ class HomePageState extends State<HomePage> {
                     child: CarousselItens(itens: carousselItens, productPage: _productPage),
                   ),
                 ),
-                SliverGrid.builder(
-                  itemCount: gridItens.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: index % 2 == 0 
-                        ? const EdgeInsets.only(left: 10, right: 5) 
-                        : const EdgeInsets.only(left: 5, right: 10),
-                      child: CardProduct(
-                        title: gridItens[index]['product_name'] ?? "", 
-                        subtitle: gridItens[index]['unitary_price'].toString(), 
-                        index: index+10,
-                        function: _productPage,
-                      ),
-                    );
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.9),
-                ),
+                if (_listSearchedProductsController.getErrorLoadProducts != null)...{
+                  SliverGrid.builder(
+                    itemCount: gridItens.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: index % 2 == 0 
+                          ? const EdgeInsets.only(left: 10, right: 5) 
+                          : const EdgeInsets.only(left: 5, right: 10),
+                        child: CardProduct(
+                          title: gridItens[index]['product_name'] ?? "", 
+                          subtitle: gridItens[index]['unitary_price'].toString(), 
+                          index: index+10,
+                          function: _productPage,
+                        ),
+                      );
+                    },
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 0.9),
+                  ),
+                } else...{
+                  SliverList.builder(
+                    itemCount: _listSearchedProductsController.getListSearchedProducts!.products.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        child: CardProduct(
+                          title: _listSearchedProductsController.getListSearchedProducts!.products[index]["product_name"],  
+                          subtitle: _listSearchedProductsController.getListSearchedProducts!.products[index]["unitary_price"].toString(),
+                          index: index+10,
+                          function: _productPage,
+                        ),
+                      );
+                    }
+                  ),
+                },
               ],
             ) 
           : Center(
@@ -137,8 +164,24 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  void _searchItem(String item) {
+  Future<void> _searchItem(String item) async {
+    await _listSearchedProductsController.onListProducts(item);
     
+    if (_listSearchedProductsController.getErrorLoadProducts != null && item.isNotEmpty) {
+      await _showMessage(_listSearchedProductsController.getErrorLoadProducts!);
+    }
+
+    setState(() {});
+  }
+
+  Future<void> _showMessage(String text) async {
+    await showDialog(
+      context: context, 
+      builder: (_) => AlertDialog(
+        title: const Text("Error", style: TextStyle(color: Color.fromARGB(255, 254, 160, 109))),
+        content: Text(text, style: const TextStyle(color: Color.fromARGB(255, 254, 160, 109))),
+      ),
+    );
   }
 
   @override
