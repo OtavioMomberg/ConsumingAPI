@@ -21,7 +21,7 @@ class CancelOrderImplementationHttp implements CancelOrderRespository {
       }
 
     } catch(error) {
-      throw Exception("Error in the operation: ${error.toString()}");
+      throw Exception(error.toString());
     }
   }
 

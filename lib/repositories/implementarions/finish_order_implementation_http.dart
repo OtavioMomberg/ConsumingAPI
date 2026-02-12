@@ -20,7 +20,7 @@ class FinishOrderImplementationHttp implements FinishOrdemRepository {
         throw Exception(response.body);
       }
     } catch(error) {
-      throw Exception("Error in the operarion: ${error.toString()}");
+      throw Exception(error.toString());
     }
   }
 

@@ -23,7 +23,8 @@ class ListProductsController {
     _errorLoadProducts = null;
     try { 
       final response = await listProductsRepository.getProducts();
-      _listProductsModel = response;
+
+      if (response != null) _listProductsModel = response;
       
     } catch(error) {
       List<String> split = error.toString().split('"');

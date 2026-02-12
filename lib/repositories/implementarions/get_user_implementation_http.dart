@@ -23,7 +23,7 @@ class GetUserImplementationHttp implements GetUserRepository {
         throw Exception(response.body);
       }
     } catch(error) {
-      throw Exception("Error in the operation: ${error.toString()}");
+      throw Exception(error.toString());
     }
   }
 

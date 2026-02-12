@@ -26,7 +26,7 @@ class RefreshImplementationHttp implements RefreshRepository {
       }
 
     } catch(error) {
-      throw Exception("Error in the request. Error: ${error.toString()}");
+      throw Exception(error.toString());
     }
   }
 

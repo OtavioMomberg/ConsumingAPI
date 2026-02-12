@@ -29,7 +29,7 @@ class UpdateUserImplementationHttp implements UpdateUserRepository {
       }
 
     } catch(error) {
-      throw Exception("Error in the operation: ${error.toString()}");
+      throw Exception(error.toString());
     }
   }
 
