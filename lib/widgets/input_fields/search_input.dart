@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SearchInput extends StatefulWidget {
   final TextEditingController controller;
-  final void Function(String) function;
+  final Future<void> Function(String) function;
   const SearchInput({required this.controller, required this.function, super.key});
 
   @override

@@ -10,7 +10,7 @@ class CarousselItens extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200,
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 5),
       child: CarouselView.weighted(
         flexWeights: [1],
         backgroundColor: Colors.white.withValues(alpha: 0.2),
