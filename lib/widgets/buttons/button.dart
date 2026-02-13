@@ -34,6 +34,7 @@ class _ButtonState extends State<Button> {
           height: 60,
           width: MediaQuery.of(context).size.width,
           child: Card(
+            margin: const EdgeInsets.all(0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadiusGeometry.circular(12),
             ),
@@ -42,17 +43,15 @@ class _ButtonState extends State<Button> {
             shadowColor: Colors.white.withValues(alpha: 0.5),
             child: Center(
               child: isLoading
-                  ? const CircularProgressIndicator(
+                ? const CircularProgressIndicator(color: Color.fromARGB(255, 254, 160, 109))
+                : Text(
+                    widget.buttonText,
+                    style: TextStyle(
+                      fontSize: 20,
                       color: Color.fromARGB(255, 254, 160, 109),
-                    )
-                  : Text(
-                      widget.buttonText,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Color.fromARGB(255, 254, 160, 109),
-                        fontWeight: FontWeight.bold,
-                      ),
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
             ),
           ),
         ),
