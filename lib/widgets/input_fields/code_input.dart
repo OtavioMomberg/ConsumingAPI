@@ -29,8 +29,8 @@ class _CodeInputState extends State<CodeInput> {
           children: <Widget>[
             ...List.generate(6, (index) {
               return Container(
-                height: 40,
-                width: 40,
+                height: getSize(),
+                width: getSize(),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
@@ -38,12 +38,22 @@ class _CodeInputState extends State<CodeInput> {
                   ),
                   color: Colors.white.withValues(alpha: 0.2),
                 ),
-                child: Center(child: Text(code?[index] ?? "", style: const TextStyle(color: Colors.white))),
+                child: Center(
+                  child: Text(code?[index] ?? "", style: const TextStyle(color: Colors.white)),
+                ),
               );
-            })
+            }),
           ],
         ),
       ),
     );
+  }
+
+  double getSize() {
+    // 0.9 => Tamanho da largura do widget Pai
+    // 60 => Soma dos Padding left e Right do Widget Pai e da Tela
+    // 6 => Quantidade de quadrados a criar
+    final size = (MediaQuery.of(context).size.width * 0.9 - 70) / 6;
+    return size;
   }
 }
