@@ -85,7 +85,7 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               CodeInput(getCode: _pastFromClipboard),
               Button(buttonText: "Verify", function: _verifyCode),
             ],
