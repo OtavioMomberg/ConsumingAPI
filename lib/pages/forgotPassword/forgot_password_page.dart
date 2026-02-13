@@ -115,7 +115,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        if (code!.compareTo("User not found") == -1)
+                        if (code! != forgotPasswordController.getErrorForgotPassword)
                           IconButton(onPressed: _copyCode, icon: Icon(Icons.copy, color: Colors.white)),
                       ],
                     ),
