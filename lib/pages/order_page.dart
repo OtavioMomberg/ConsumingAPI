@@ -141,7 +141,13 @@ class _OrderPageState extends State<OrderPage> {
               ),
           )
           : Center(
-              child: Text(getUserOrderController.getErrorOrder!),
+              child: Text(
+                getUserOrderController.getErrorOrder!,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             )
     );
   }

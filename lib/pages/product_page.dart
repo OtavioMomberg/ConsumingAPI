@@ -146,7 +146,13 @@ class _ProductPageState extends State<ProductPage> {
               ),
             )
           : Center(
-              child: Text(getProductController.getErrorProduct!),
+              child: Text(
+                getProductController.getErrorProduct!,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
     );
   }

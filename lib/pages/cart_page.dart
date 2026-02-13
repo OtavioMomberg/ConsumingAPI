@@ -172,7 +172,13 @@ class CartPageState extends State<CartPage> {
               ],
             )
           : Center(
-              child: Text(_getCartItensController.getErrorCartItens!),
+              child: Text(
+                _getCartItensController.getErrorCartItens!,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
     );
   }

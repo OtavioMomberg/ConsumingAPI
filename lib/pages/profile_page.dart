@@ -148,7 +148,13 @@ class ProfilePageState extends State<ProfilePage> {
               ],
             )
           : Center(
-              child: Text(getUserController.getErrorUser!),
+              child: Text(
+                getUserController.getErrorUser!,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
     );
   }

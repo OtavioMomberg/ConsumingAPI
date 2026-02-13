@@ -125,7 +125,13 @@ class OrdersPageState extends State<OrdersPage> {
               ],
             )
           : Center(
-              child: Text(listOrdersController.getErrorListOrders!),
+              child: Text(
+                listOrdersController.getErrorListOrders!,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
     );
   }

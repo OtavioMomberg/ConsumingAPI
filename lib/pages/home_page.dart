@@ -147,7 +147,13 @@ class HomePageState extends State<HomePage> {
               ],
             ) 
           : Center(
-              child: Text(_listProductsController.getErrorLoadProducts!),
+              child: Text(
+                _listProductsController.getErrorLoadProducts!,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
     );
   }
